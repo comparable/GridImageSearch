@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -58,30 +57,7 @@ public class SearchActivity extends Activity {
 			public void loadMore(int page, int totalItemsCount) {
 				//Log.d("DEBUG", "page "+page+" totalItemsCount "+totalItemsCount+" start "+start);
 				start=(page*6)+1;
-				Client.get(
-						"https://ajax.googleapis.com/ajax/services/search/images?rsz=6&" +
-						"start=" + start +"&v=1.0" +
-						"&as_sitesearch="+  Uri.encode(site) +
-						"&imgcolor="+ color +
-						"&imgsz=" + size +
-						"&imgtype=" + type +
-						"&q=" + Uri.encode(query),
-						//Response Handler
-						new JsonHttpResponseHandler(){
-					public void onSuccess(JSONObject response){
-						JSONArray imageJsonResults = null;
-						try {
-							imageJsonResults = response.getJSONObject("responseData").getJSONArray("results");
-							
-							imageAdapter.addAll(ImageResult.fromJSONArray(imageJsonResults));
-							//Log.d("DEBUG", imageResults.toString());
-									
-						} catch(JSONException e) {
-							e.printStackTrace();					
-						}
-						
-					}
-				});
+				connect();
 			}
 			
 		});
@@ -114,6 +90,13 @@ public class SearchActivity extends Activity {
 		
 		for(int i =0;i < 3; i++){
 			start = start+(i*6);
+		connect();
+		
+		}
+	}
+
+
+	private void connect() {
 		Client.get(
 				"https://ajax.googleapis.com/ajax/services/search/images?rsz=8&" +
 				"start=" + start +"&v=1.0" +
@@ -139,7 +122,6 @@ public class SearchActivity extends Activity {
 			}
 		});
 		
-		}
 	}
 
 
@@ -166,11 +148,11 @@ public class SearchActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent i) {
 		 
      		if (resultCode == RESULT_OK && requestCode == 0) {
-     		 	
-     		 color = i.getExtras().getString("color");
-		     size = i.getExtras().getString("size");
-		     type = i.getExtras().getString("type");
-		     site = i.getExtras().getString("site");
+     		 	Filter f = (Filter) i.getSerializableExtra("filter");
+     		 	color = f.getColor();
+     		 	size = f.getSize();
+     		 	type = f.getType();
+     		 	site = f.getSite();
 		  }
 		} 
 

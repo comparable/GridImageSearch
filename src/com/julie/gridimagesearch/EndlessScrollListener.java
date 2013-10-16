@@ -45,7 +45,7 @@ public abstract class EndlessScrollListener implements OnScrollListener {
 			this.currentPage = this.startingPageIndex;
 			this.previousTotalItemCount = totalItemCount;
 			this.loading = true;
-			Log.d("DEBUG","totalItemCount < previousTotalItemCount"+totalItemCount+previousTotalItemCount );
+			//Log.d("DEBUG","totalItemCount < previousTotalItemCount"+totalItemCount+previousTotalItemCount );
 		}
 
 		// If it’s still loading, we check to see if the data set count has
@@ -56,7 +56,7 @@ public abstract class EndlessScrollListener implements OnScrollListener {
 				loading = false;
 				previousTotalItemCount = totalItemCount;
 				currentPage++;
-				Log.d("DEBUG","totalItemCount > previousTotalItemCount"+totalItemCount+previousTotalItemCount );
+				//Log.d("DEBUG","totalItemCount > previousTotalItemCount"+totalItemCount+previousTotalItemCount );
 			}
 		}
 		// If it isn’t currently loading, we check to see if we have breached
@@ -65,7 +65,7 @@ public abstract class EndlessScrollListener implements OnScrollListener {
 		if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
 			loadMore(currentPage + 1, totalItemCount);
 			loading = true;
-			Log.d("DEBUG","(totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)" );
+			//Log.d("DEBUG","(totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)" );
 		}
 	}
 

@@ -58,14 +58,15 @@ public class SettingActivity extends Activity implements OnItemSelectedListener 
 		btnSave.setOnClickListener(new OnClickListener(){
 			public void onClick(View view) {
 				site = etSiteFilter.getText().toString();
-				//filter = new Filter(size, color, type, site);
-				
+				filter = new Filter(size, color, type, site);
+				//Log.d("DEBUG", filter.getColor().toString()+filter.getSize().toString());
 				Intent i = new Intent();
-				i.putExtra("color",color);
+				/**i.putExtra("color",color);
 				i.putExtra("size",size);
 				i.putExtra("type",type);
 				i.putExtra("site",site);
-				//Log.d("DEBUG", filter.getColor().toString()+filter.getSize().toString());
+				**/
+				i.putExtra("filter", filter);
 				setResult(RESULT_OK, i);
 				finish();
 			}
